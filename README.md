@@ -1,0 +1,1 @@
+This is a simple bot that counts how many times its written commits and updates a text file with the current count. After updating the count it then commits the updated file to github to make sure we don't lose track.
