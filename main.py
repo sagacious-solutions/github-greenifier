@@ -17,17 +17,21 @@ def write_file(filename):
 
 
 def update_todays_commits(commit_list: List[str]):
-    print(TODAYS_DATE)
-    print(type(TODAYS_DATE))
+    todays_date_str = TODAYS_DATE.strftime("%m-%d-%Y")
 
     for str in commit_list:
-        if TODAYS_DATE in str:
+        if todays_date_str in str:
             print("This is the line")
+            daily_count = get_commit_count_from_line(str)
+            print(f"This was {daily_count} commits on this day.")
+
+
+def get_commit_count_from_line(entry: str):
+    number_str = entry.split(" made ")[1].split(" commits")[0]
+    return int(number_str)
 
 
 if __name__ == "__main__":
     current_tracker = retrieve_file_as_list(commit_tracker)
 
     update_todays_commits(current_tracker)
-
-    write_file(commit_tracker)
