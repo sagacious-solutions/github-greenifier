@@ -2,15 +2,20 @@ from typing import List
 from pathlib import Path
 from RPA.Windows import Windows
 import re
+import time
 
 win = Windows()
-
-
 
 from file_handler import (
     retrieve_file_as_list,
     update_todays_commits,
     write_list_to_file,
+)
+
+from terminal_handler import (
+    open_terminal,
+    get_terminal_focus,
+    enter_command_in_terminal,
 )
 
 COMMIT_TRACKER_PATH = Path.cwd() / "commit_tracker.txt"
@@ -30,41 +35,48 @@ def update_commits_count_tracker() -> int:
 
     return get_total_commit_count(updated_list)
 
+
 def get_total_commit_count(updated_list: List[str]) -> int:
     total = 0
     for line in updated_list:
-        count = ''.join(re.findall('[0-9]',line.split(':')[1]))
+        count = "".join(re.findall("[0-9]", line.split(":")[1]))
         total += int(count)
 
     return total
 
-def open_terminal():
-    win.windows_run("cmd")
-
-def get_terminal_focus():
-    return win.control_window('subname:"cmd.exe"')
-
-def navigate_to_repo_directory(element):
-    repo_path = Path.cwd().as_posix()
-    enter_command_in_terminal(element, f"cd {repo_path}")
-
-
-def enter_command_in_terminal(element, command):
-    win.send_keys(element, command, send_enter=True)
-
 
 def make_commit(total_commits):
+    """Opens the terminal, adds the commit_tracker to git tracking. Commits and pushes
+        the newest changes. Closes the terminal.
+
+    Args:
+        total_commits (int): Total count of commits listed in the tracker file
+    """
     open_terminal()
     terminal_element = get_terminal_focus()
-    navigate_to_repo_directory(terminal_element)
+    repo_path = Path.cwd().as_posix()
+    enter_command_in_terminal(terminal_element, f"cd {repo_path}")
     enter_command_in_terminal(terminal_element, f"git add commit_tracker.txt")
-    enter_command_in_terminal(terminal_element, f'git commit -m "Heres commit #{total_commits}"')
+    enter_command_in_terminal(
+        terminal_element, f'git commit -m "Heres commit #{total_commits}"'
+    )
     enter_command_in_terminal(terminal_element, f"git push")
     win.close_window(terminal_element)
 
 
-if __name__ == "__main__":
-    total_commits = update_commits_count_tracker()
-    make_commit(total_commits)
+def main_loop():
+    WAIT_BETWEEN_COMMITS_SECS = 300
+    print("Now starting infinite commit bot. Press ctrl-C to quit.")
+    while True:
+        total_commits = update_commits_count_tracker()
+        make_commit(total_commits)
+        print(
+            f"Just made commit #{total_commits}. \nWill wait"
+            f" {WAIT_BETWEEN_COMMITS_SECS} seconds and then make another.\n"
+            " Ctrl-C to exit."
+        )
+        time.sleep(WAIT_BETWEEN_COMMITS_SECS)
 
-    print("Completed")
+
+if __name__ == "__main__":
+    main_loop()
