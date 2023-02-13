@@ -67,9 +67,11 @@ def make_commit(total_commits):
 def main_loop():
     MINUTE_IN_SECS = 60
     HOUR_IN_MINUTES = 60
-    # WAIT_BETWEEN_COMMITS_SECS = HOUR_IN_MINUTES * MINUTE_IN_SECS
-    WAIT_BETWEEN_COMMITS_SECS = 30
-    print("Now starting infinite commit bot. Press ctrl-C to quit.")
+    WAIT_BETWEEN_COMMITS_SECS = HOUR_IN_MINUTES * MINUTE_IN_SECS
+    print(
+        "Now starting infinite commit bot. The bot will commit once an hour as long"
+        " as this continues to run. Press ctrl-C to quit."
+     )
     while True:
         total_commits = update_commits_count_tracker()
         make_commit(total_commits)
