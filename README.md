@@ -5,7 +5,7 @@ As a developer, I firmly believe well written and tested code is of utmost impor
 Therefore this project is to make my github look more green at a glance while I spend time upskilling and working on more technically challenging projects.
 
 For awesome examples of my work, see the below links.
- - <a href="https://www.youtube.com/watch?v=1xCQsEJd7FI">RGB Everywhere Comercial</a>
+ - <a href="https://www.youtube.com/watch?v=1xCQsEJd7FI">RGB Everywhere Commercial</a>
  - <a href="https://github.com/sagacious-solutions/rgb-everywhere-web-interface">RGB Everywhere Whole Home Lighting Solution</a>
  - <a href="https://github.com/sagacious-solutions/Planet-Snake-HardwareAPI">Planet Snake Hardware API</a>
  - <a href="https://github.com/sagacious-solutions/planet-snake-website">Planet Snake React Website</a>
