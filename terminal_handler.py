@@ -54,7 +54,7 @@ def get_terminal_text_as_list(cmd_box_element: WindowsElement) -> List[str]:
     text_list = []
     cleaned_text_list = []
 
-    # Sometimes it pulls as only one text range object with linebreaks in in the strings
+    # Sometimes it pulls as only one text range object with linebreaks in the strings
     if len(visible_text_range_list) == 1:
         text_list = visible_text_range_list[0].GetText().split('\r\n')
     else :
