@@ -23,7 +23,7 @@ from terminal_handler import (
 COMMIT_TRACKER_PATH = Path.cwd() / "commit_tracker.txt"
 
 
-def update_commits_count_tracker() -> int:
+def update_commits_count_tracker() -> None:
     """Handles updating the count for today in the commits count tracker
 
     Returns:
@@ -34,17 +34,6 @@ def update_commits_count_tracker() -> int:
     updated_list = update_todays_commits(current_tracker)
 
     write_list_to_file(COMMIT_TRACKER_PATH, updated_list)
-
-    return get_total_commit_count(updated_list)
-
-
-def get_total_commit_count(updated_list: List[str]) -> int:
-    total = 0
-    for line in updated_list:
-        count = "".join(re.findall("[0-9]", line.split(":")[1]))
-        total += int(count)
-
-    return total
 
 
 def get_commit_count_from_git():
@@ -91,6 +80,7 @@ def main_loop():
     )
     while True:
         total_commits = get_commit_count_from_git()
+        update_commits_count_tracker()
         make_commit(total_commits)
         print(
             f"Just made commit #{total_commits}. \nWill wait"
