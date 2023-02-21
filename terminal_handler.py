@@ -52,11 +52,15 @@ def get_terminal_text_as_list(cmd_box_element: WindowsElement) -> List[str]:
     visible_text_range_list = text_pattern.GetVisibleRanges()
 
     text_list = []
+    cleaned_text_list = []
 
-    for item in visible_text_range_list:
-        text = item.GetText()
+    # Sometimes it pulls as only one text range object with linebreaks in in the strings
+    if len(visible_text_range_list) == 1:
+        text_list = visible_text_range_list[0].GetText().split('\r\n')
+    else :
+        text_list = [text_range.GetText() for text_range in visible_text_range_list]
 
-        if text:
-            text_list.append(text)
+    # Get any lines of characters that contain non white space
+    cleaned_text_list = [text.strip() for text in text_list if text.strip()]
 
-    return text_list
+    return cleaned_text_list
