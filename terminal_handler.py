@@ -21,7 +21,9 @@ def get_terminal_focus():
 
 def close_terminal_pop_up():
     """Closes any terminals opened as admin that aren't currently executing any actions"""
-    LOCATOR_NON_EXECUTING_TERMINAL = 'name:"C:\Windows\system32\cmd.exe"'
+    LOCATOR_NON_EXECUTING_TERMINAL = (
+        'name:"Administrator: C:\Windows\system32\cmd.exe"'
+    )
     win.close_window(LOCATOR_NON_EXECUTING_TERMINAL)
 
 
