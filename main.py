@@ -37,6 +37,12 @@ def update_commits_count_tracker() -> None:
 
 
 def get_commit_count_from_git():
+    """Opens the terminal, navigates to the repo folder, checks the commit history,
+        extracts commit count number from terminal and returns it.
+
+    Args:
+        total_commits (int): The total amount of commits in the commit history
+    """
     SECOND_TO_LAST_ITEM_IN_TERMINAL = -2
     open_terminal()
     terminal_element = get_terminal_focus()
@@ -46,7 +52,7 @@ def get_commit_count_from_git():
     enter_command_in_terminal(terminal_element, f"git rev-list --all --count")
     term_text_list = get_terminal_text_as_list(terminal_element)
     close_terminal_pop_up()
-    return int(term_text_list[SECOND_TO_LAST_ITEM_IN_TERMINAL])
+    return int(term_text_list[SECOND_TO_LAST_ITEM_IN_TERMINAL]) + 1
 
 
 def make_commit(total_commits):
