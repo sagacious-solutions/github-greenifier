@@ -16,6 +16,8 @@ from terminal_handler import (
     open_terminal,
     get_terminal_focus,
     enter_command_in_terminal,
+    get_terminal_text_as_list,
+    close_terminal_pop_up,
 )
 
 COMMIT_TRACKER_PATH = Path.cwd() / "commit_tracker.txt"
@@ -45,6 +47,19 @@ def get_total_commit_count(updated_list: List[str]) -> int:
     return total
 
 
+def get_commit_count_from_git():
+    SECOND_TO_LAST_ITEM_IN_TERMINAL = -2
+    open_terminal()
+    terminal_element = get_terminal_focus()
+    repo_path = Path.cwd().as_posix()
+    enter_command_in_terminal(terminal_element, f"cd {repo_path}")
+    enter_command_in_terminal(terminal_element, "cls")
+    enter_command_in_terminal(terminal_element, f"git rev-list --all --count")
+    term_text_list = get_terminal_text_as_list(terminal_element)
+    close_terminal_pop_up()
+    return int(term_text_list[SECOND_TO_LAST_ITEM_IN_TERMINAL])
+
+
 def make_commit(total_commits):
     """Opens the terminal, adds the commit_tracker to git tracking. Commits and pushes
         the newest changes. Closes the terminal.
@@ -68,13 +83,14 @@ def make_commit(total_commits):
 def main_loop():
     MINUTE_IN_SECS = 60
     HOUR_IN_MINUTES = 60
-    WAIT_BETWEEN_COMMITS_SECS = HOUR_IN_MINUTES * MINUTE_IN_SECS
+    # WAIT_BETWEEN_COMMITS_SECS = HOUR_IN_MINUTES * MINUTE_IN_SECS
+    WAIT_BETWEEN_COMMITS_SECS = 30
     print(
         "Now starting infinite commit bot. The bot will commit once an hour as"
         " long as this continues to run. Press ctrl-C to quit."
     )
     while True:
-        total_commits = update_commits_count_tracker()
+        total_commits = get_commit_count_from_git()
         make_commit(total_commits)
         print(
             f"Just made commit #{total_commits}. \nWill wait"
