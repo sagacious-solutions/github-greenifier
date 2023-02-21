@@ -56,6 +56,7 @@ def make_commit(total_commits):
     terminal_element = get_terminal_focus()
     repo_path = Path.cwd().as_posix()
     enter_command_in_terminal(terminal_element, f"cd {repo_path}")
+    enter_command_in_terminal(terminal_element, f"git pull")
     enter_command_in_terminal(terminal_element, f"git add commit_tracker.txt")
     enter_command_in_terminal(
         terminal_element, f'git commit -m "Heres commit #{total_commits}"'
@@ -69,9 +70,9 @@ def main_loop():
     HOUR_IN_MINUTES = 60
     WAIT_BETWEEN_COMMITS_SECS = HOUR_IN_MINUTES * MINUTE_IN_SECS
     print(
-        "Now starting infinite commit bot. The bot will commit once an hour as long"
-        " as this continues to run. Press ctrl-C to quit."
-     )
+        "Now starting infinite commit bot. The bot will commit once an hour as"
+        " long as this continues to run. Press ctrl-C to quit."
+    )
     while True:
         total_commits = update_commits_count_tracker()
         make_commit(total_commits)
