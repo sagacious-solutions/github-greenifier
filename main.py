@@ -77,7 +77,7 @@ def make_commit(total_commits):
         terminal_element, f'git commit -m "Heres commit #{total_commits}"'
     )
     enter_command_in_terminal(terminal_element, f"git push")
-    win.close_window(terminal_element)
+    close_terminal_pop_up()
 
 
 def main_loop():
