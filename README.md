@@ -15,6 +15,11 @@ For awesome examples of my work, see the below links.
 
 # Deploying this bot
 
+This bot constantly runs making commits to its self. When running, it will update the commit tracker with the current commit count for the day,
+then it will commit and push that file. The bot is configured with email, so if the bot experiences an exception it will email you a screenshot
+of the VMs desktop. It will still attempt to continue to run if theres an error. If you find yourself constantly getting error emails though,
+the bot is likely hung.
+
  - Create a free tier ec2 instance with Windows Sever 2022 on AWS 
  - Configure the security group to allow for RDP Access from only your IP Address to prevent unwanted access
  - Connect via RDP to the new machine
@@ -27,6 +32,10 @@ For awesome examples of my work, see the below links.
        git config --global user.name "FIRST_NAME LAST_NAME"
        ```
    4) Clone the repo onto the machine, and change to its directory
+   5) Populate the .env file with the following keys
+       USER : email address to send from
+       PASS : email password for account
+       RECIPIENT : email address to send the alert emails too    
    6) Create a virtual enviroment for the bot, install requirements, and run main.py
         ```
         python -m venv .venv
