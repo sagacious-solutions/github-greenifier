@@ -20,6 +20,9 @@ from terminal_handler import (
     close_terminal_pop_up,
 )
 
+from failure_alert import email_alert_on_failure
+
+
 COMMIT_TRACKER_PATH = Path.cwd() / "commit_tracker.txt"
 
 
@@ -105,14 +108,26 @@ def main_loop():
         try :
             commit_and_update_tracker(WAIT_BETWEEN_COMMITS_SECS)            
         except IndexError as err:
-            print(
+            failure_str = (
                 "The commit loop had a fault. Likely it didn't get the"
                 f" element for console. Waiting {WAIT_FOR_RETRY_ON_ERROR_SECS}"
                 f" seconds and then will try again. \n{err}"
             )
+            print(failure_str)
+            email_alert_on_failure(failure_str)
             time.sleep(WAIT_FOR_RETRY_ON_ERROR_SECS)
+        except Exception as err :
+            failure_str = (
+                "The commit loop had an unknown fault."
+                f" Waiting {WAIT_FOR_RETRY_ON_ERROR_SECS}"
+                f" seconds and then will try again. \n{err}"
+            )
+            print(failure_str)
+            email_alert_on_failure(failure_str)
+            time.sleep(WAIT_FOR_RETRY_ON_ERROR_SECS)            
+            
         time.sleep(WAIT_BETWEEN_COMMITS_SECS)
     
 
-if __name__ == "__main__":
+if __name__ == "__main__" :    
     main_loop()

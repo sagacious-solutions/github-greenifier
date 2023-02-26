@@ -1,1 +1,1 @@
-rpaframework==21.1.0
+rpaframework==22.0.0
