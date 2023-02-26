@@ -55,7 +55,7 @@ def get_commit_count_from_git():
     return int(term_text_list[SECOND_TO_LAST_ITEM_IN_TERMINAL]) + 1
 
 
-def make_commit(total_commits):
+def make_commit(total_commits : int) -> None:
     """Opens the terminal, adds the commit_tracker to git tracking. Commits and pushes
         the newest changes. Closes the terminal.
 
@@ -74,26 +74,45 @@ def make_commit(total_commits):
     enter_command_in_terminal(terminal_element, f"git push")
     close_terminal_pop_up()
 
+def commit_and_update_tracker(wait_between_commits_secs : int) -> None:
+    """Gets the current commit count, updates the commit tracker and then commits
+        the changes
+
+    Args:
+        wait_between_commits_secs (int): Wait time to display in message
+    """    
+    total_commits = get_commit_count_from_git()
+    update_commits_count_tracker()
+    make_commit(total_commits)
+    print(
+        f"Just made commit #{total_commits}. \nWill wait"
+        f" {wait_between_commits_secs} seconds and then make another.\n"
+        " Ctrl-C to exit."
+    )
+    
+    
 
 def main_loop():
     MINUTE_IN_SECS = 60
     HOUR_IN_MINUTES = 60
     WAIT_BETWEEN_COMMITS_SECS = HOUR_IN_MINUTES * MINUTE_IN_SECS
+    WAIT_FOR_RETRY_ON_ERROR_SECS = 60
     print(
         "Now starting infinite commit bot. The bot will commit once an hour as"
         " long as this continues to run. Press ctrl-C to quit."
     )
     while True:
-        total_commits = get_commit_count_from_git()
-        update_commits_count_tracker()
-        make_commit(total_commits)
-        print(
-            f"Just made commit #{total_commits}. \nWill wait"
-            f" {WAIT_BETWEEN_COMMITS_SECS} seconds and then make another.\n"
-            " Ctrl-C to exit."
-        )
+        try :
+            commit_and_update_tracker(WAIT_BETWEEN_COMMITS_SECS)            
+        except IndexError as err:
+            print(
+                "The commit loop had a fault. Likely it didn't get the"
+                f" element for console. Waiting {WAIT_FOR_RETRY_ON_ERROR_SECS}"
+                f" seconds and then will try again. \n{err}"
+            )
+            time.sleep(WAIT_FOR_RETRY_ON_ERROR_SECS)
         time.sleep(WAIT_BETWEEN_COMMITS_SECS)
-
+    
 
 if __name__ == "__main__":
     main_loop()
