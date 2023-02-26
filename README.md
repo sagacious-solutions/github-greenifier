@@ -27,7 +27,7 @@ For awesome examples of my work, see the below links.
        git config --global user.name "FIRST_NAME LAST_NAME"
        ```
    4) Clone the repo onto the machine, and change to its directory
-   5) Create a virtual enviroment for the bot, install requirements, and run main.py
+   6) Create a virtual enviroment for the bot, install requirements, and run main.py
         ```
         python -m venv .venv
         .venv\scripts\activate
@@ -35,7 +35,7 @@ For awesome examples of my work, see the below links.
         pip install -r requirements.txt
         python main.py
         ```
-   6) Exit the remote desktop via specific command to leave bot running after closing RDP connection
+   7) Exit the remote desktop via specific command to leave bot running after closing RDP connection
         ```
         qwinsta (This will give you rdp session name and number)
         C:\Windows\System32\tscon.exe rdp-tcp#1 /dest:console        
