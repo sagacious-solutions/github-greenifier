@@ -4,6 +4,11 @@ As a developer, I firmly believe well written and tested code is of utmost impor
 
 Therefore this project is to make my github look more green at a glance while I spend time upskilling and working on more technically challenging projects.
 
+Currently I'm enhancing my C++, Recurison and Algorithm skills by taking <a href="https://see.stanford.edu/Course/CS106B">CS106B from Stanford Engineering Everywhere</a>. You can find any repos associated with that below.
+- <a href="https://github.com/sagacious-solutions/CS106B-Practice">CS106B-Practice</a>
+
+Previously I've also completed <a href="https://see.stanford.edu/Course/CS106A">CS106A</a> prior to learning version control.
+
 For awesome examples of my work, see the below links.
  - <a href="https://www.youtube.com/watch?v=1xCQsEJd7FI">RGB Everywhere Commercial</a>
  - <a href="https://github.com/sagacious-solutions/rgb-everywhere-web-interface">RGB Everywhere Whole Home Lighting Solution</a>
